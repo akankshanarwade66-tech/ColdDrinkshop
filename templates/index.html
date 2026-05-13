@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="controls">
+    <form method="GET" action="{{ url_for('index') }}">
+        <input type="text" name="search" placeholder="Search drinks..." value="{{ search }}">
+
+        <select name="category">
+            {% for cat in categories %}
+                <option value="{{ cat }}" {% if cat == current_cat %}selected{% endif %}>
+                    {{ cat }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+
+<div class="drink-grid">
+
+{% for drink in drinks %}
+
+<div class="card">
+    <img src="{{ url_for('static', filename=drink.image) }}" alt="{{ drink.name }}" class="product-image">
+    <div class="card-body">
+
+        <h3 class="card-title">{{ drink.name }}</h3>
+
+        <p style="color:gray;">{{ drink.category }}</p>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+
+            <span class="card-price">{{ drink.price }}</span>
+
+            <a href="{{ url_for('add_to_cart', drink_id=drink.id) }}">
+                <button>Add to Cart</button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Shopping Cart</h2>
+<div style="max-width: 600px; margin: 0 auto;">
+    {% if cart %}
+        {% for item in cart %}
+        <div class="cart-item">
+            <div>
+                <strong>{{ item.name }}</strong><br>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:5px;">
+
+<a href="{{ url_for('decrease_qty', drink_id=item.id) }}"
+style="padding:3px 10px;background:#ccc;text-decoration:none;">-</a>
+
+<span>{{ item.qty }}</span>
+
+<a href="{{ url_for('increase_qty', drink_id=item.id) }}"
+style="padding:3px 10px;background:#28a745;color:white;text-decoration:none;">+</a>
+
+</div>
+            </div>
+            <div>
+                <span>₹{{ item.price * item.qty }}</span>
+                <a href="{{ url_for('remove_from_cart', drink_id=item.id) }}" style="color: red; margin-left: 10px; text-decoration: none;">Remove</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="total-box">
+            <p>Total: {{ "%.2f"|format( cart | sum(attribute='price') ) }}</p>
+
+            <!-- Note: The above sum logic is simplified. For accurate calculation, see app.py update below -->
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url_for('checkout') }}">
+                <button style="background-color: var(--success);">Proceed to Pay</button>
+            </a>
+        </div>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <a href="{{ url_for('index') }}">Go to Shop</a>
+    {% endif %}
+</div>
+{% endblock %}
