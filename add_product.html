@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add Product</h2>
+<form method="POST" style="max-width:600px">
+<div style="margin-bottom:15px;">
+<label>Drink Name</label><br>
+<input type="text" name="name" required>
+</div>
+
+<div style="margin-bottom:15px;">
+<label>Category</label><br>
+<input type="text" name="category" required>
+</div>
+
+<div style="margin-bottom:15px;">
+<label>Price</label><br>
+<input type="number" name="price" required>
+</div>
+
+<div style="margin-bottom:15px;">
+<label>Image Path</label><br>
+<input type="text" name="image" placeholder="images/coca.jpg">
+</div>
+
+<button type="submit">Add Product</button>
+
+</form>
+{% endblock %}

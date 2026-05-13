@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>My Orders</h2>
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Drink</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Date</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for order in orders %}
+
+<tr>
+<td>#{{ order.id }}</td>
+<td>{{ order.drink_name }}</td>
+<td>{{ order.qty }}</td>
+<td>{{ order.order_time.strftime('%d-%m-%Y %H:%M') }}</td>
+<td>₹{{ order.price }}</td>
+
+<td>
+
+{% if order.status == "Pending" %}
+<span class="badge bg-warning">Pending</span>
+<a href="{{ url_for('user_cancel_order', order_id=order.id) }}"
+class="btn btn-danger btn-sm ms-2">
+Cancel
+</a>
+
+{% elif order.status == "Confirmed" %}
+<span class="badge bg-success">Confirmed</span>
+
+{% elif order.status == "Cancelled" %}
+<span class="badge bg-danger">
+Cancelled (Product Not Available)
+
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}
